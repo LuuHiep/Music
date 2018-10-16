@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="toolbar_transparent">#33000000</color>
+    <color name="pager_background">#4D000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="tab_song_color_song">#0978c2</color>
+    <color name="tab_song_color_artist">#787272</color>
+    <color name="tab_song_backgroud_view">#a9a5a5</color>
+
+    <color name="tab_album_backgroud_item">#e9c1ec</color>
+    <color name="tab_album_color_text">#6f7ce1</color>
+
+    <color name="tab_artist_backgroud_item">#80c9d7</color>
+    <color name="tab_artist_color_text">#e5e6ec</color>
+
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/iv_icon_beats"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/icon_beats"/>
+
+    <TextView
+        android:id="@+id/tv_song_name"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_toRightOf="@id/iv_icon_beats"
+        android:textColor="@color/tab_song_color_song"
+        android:textSize="20sp"
+        android:gravity="left" />
+
+    <TextView
+        android:id="@+id/tv_song_artist_name"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_toRightOf="@id/iv_icon_beats"
+        android:layout_below="@id/tv_song_name"
+        android:textColor="@color/tab_song_color_artist"
+        android:textSize="20sp"
+        android:gravity="left"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@id/iv_icon_beats"
+        android:background="@color/tab_song_backgroud_view"/>
+
+</RelativeLayout>

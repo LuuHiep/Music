@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/iv_icon_album"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:src="@drawable/icon_artist"
+        android:background="@color/tab_artist_backgroud_item"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tv_artist_name"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textSize="20sp"
+            android:gravity="left"
+            android:textColor="@color/tab_artist_color_text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:background="@android:color/transparent">
+
+            <TextView
+                android:id="@+id/tv_song_number"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@android:color/transparent"
+                android:textColor="@color/tab_artist_color_text"/>
+
+            <TextView
+                android:id="@+id/tv_album_number"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@android:color/transparent"
+                android:textColor="@color/tab_artist_color_text"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

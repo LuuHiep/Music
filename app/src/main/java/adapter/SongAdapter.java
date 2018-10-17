@@ -1,8 +1,10 @@
 package adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import com.example.lau.music.R;
 
 import java.util.ArrayList;
 
+import activity.PlayActivity;
 import model.Song;
 
 public class SongAdapter extends RecyclerView.Adapter <SongAdapter.viewHolder> {
@@ -38,10 +41,20 @@ public class SongAdapter extends RecyclerView.Adapter <SongAdapter.viewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull viewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull viewHolder viewHolder, final int position) {
         viewHolder.tvSongName.setText(songArrayList.get(position).getTitle());
         viewHolder.tvSongAritstName.setText(songArrayList.get(position).getArtist());
         viewHolder.iconBeats.setImageResource((songArrayList.get(position).getImageSong()));
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentSongPlay = new Intent(contextSong, PlayActivity.class);
+                intentSongPlay.putExtra("position", position);
+                Log.d("position_0", "" + position);
+                contextSong.startActivity(intentSongPlay);
+            }
+        });
     }
 
     @Override
@@ -61,4 +74,5 @@ public class SongAdapter extends RecyclerView.Adapter <SongAdapter.viewHolder> {
             tvSongAritstName = (TextView) itemView.findViewById(R.id.tv_song_artist_name);
         }
     }
+
 }

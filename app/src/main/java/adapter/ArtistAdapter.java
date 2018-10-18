@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.example.lau.music.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import model.Album;
 import model.Artist;
 
 public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.viewHolder> {
@@ -37,7 +39,6 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.viewHolder
         viewHolder.tvArtistName.setText(artistArrayList.get(position).getNameArtist());
         viewHolder.tvAlbumNumber.setText(artistArrayList.get(position).getNumberAlbum());
         viewHolder.tvSongNumber.setText(artistArrayList.get(position).getNumberSong());
-        viewHolder.ivArtistImage.setImageResource(artistArrayList.get(position).getImageArtist());
     }
 
     @Override
@@ -59,5 +60,12 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.viewHolder
             tvSongNumber = (TextView) itemView.findViewById(R.id.tv_song_number);
             tvAlbumNumber = (TextView) itemView.findViewById(R.id.tv_album_number);
         }
+    }
+
+
+    public void setfilter(List<Artist> listArtist) {
+        listArtist = new ArrayList<>();
+        listArtist.addAll(listArtist);
+        notifyDataSetChanged();
     }
 }

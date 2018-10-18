@@ -3,6 +3,7 @@
 
     <string name="song_name_play">Song Name</string>
     <string name="artist_name_play">Artist Name</string>
-    <string name="change_layout">List_Grid</string>
+    <string name="change_layout">List</string>
+    <string name="change_layout_grid">Grid</string>
 
 </resources>

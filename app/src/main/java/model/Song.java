@@ -2,27 +2,34 @@ package model;
 
 public class Song {
     private int id;
-    private String title;
+    private String nameSong;
+    private String nameArtist ;
     private String album;
-    private String artist;
-    private int duration;
+    private int idAlbum;
     private int imageSong;
-    private String path;
 
-    public Song(int id, String title, String album, String artist, int duration, int imageSong, String path) {
+    public Song(int id, String nameSong, String nameArtist, int idAlbum) {
         this.id = id;
-        this.title = title;
+        this.nameSong = nameSong;
+        this.nameArtist = nameArtist;
         this.album = album;
-        this.artist = artist;
-        this.duration = duration;
-        this.imageSong = imageSong;
-        this.path = path;
+        this.idAlbum = idAlbum;
     }
 
-    public Song(int id, String title, String artist, int imageSong) {
+    public Song(int id, String nameSong, String nameArtist, String album, int idAlbum, int imageSong) {
         this.id = id;
-        this.title = title;
-        this.artist = artist;
+        this.nameSong = nameSong;
+        this.nameArtist = nameArtist;
+        this.album = album;
+        this.idAlbum = idAlbum;
+        this.imageSong = imageSong;
+    }
+
+    public int getImageSong() {
+        return imageSong;
+    }
+
+    public void setImageSong(int imageSong) {
         this.imageSong = imageSong;
     }
 
@@ -34,12 +41,20 @@ public class Song {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getNameSong() {
+        return nameSong;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setNameSong(String nameSong) {
+        this.nameSong = nameSong;
+    }
+
+    public String getNameArtist() {
+        return nameArtist;
+    }
+
+    public void setNameArtist(String nameArtist) {
+        this.nameArtist = nameArtist;
     }
 
     public String getAlbum() {
@@ -50,35 +65,11 @@ public class Song {
         this.album = album;
     }
 
-    public String getArtist() {
-        return artist;
+    public int getIdAlbum() {
+        return idAlbum;
     }
 
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public int getImageSong() {
-        return imageSong;
-    }
-
-    public void setImageSong(int imageSong) {
-        this.imageSong = imageSong;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
+    public void setIdAlbum(int idAlbum) {
+        this.idAlbum = idAlbum;
     }
 }

@@ -2,14 +2,14 @@ package model;
 
 public class Album {
     private int id;
-    private String title;
-    private String artist;
+    private String nameAlbums;
+    private String nameAuthor;
     private String imageAlbum;
 
-    public Album(int id, String title, String artist, String imageAlbum) {
+    public Album(int id, String nameAlbums, String nameAuthor, String imageAlbum) {
         this.id = id;
-        this.title = title;
-        this.artist = artist;
+        this.nameAlbums = nameAlbums;
+        this.nameAuthor = nameAuthor;
         this.imageAlbum = imageAlbum;
     }
 
@@ -21,20 +21,20 @@ public class Album {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getNameAlbums() {
+        return nameAlbums;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setNameAlbums(String nameAlbums) {
+        this.nameAlbums = nameAlbums;
     }
 
-    public String getArtist() {
-        return artist;
+    public String getNameAuthor() {
+        return nameAuthor;
     }
 
-    public void setArtist(String artist) {
-        this.artist = artist;
+    public void setNameAuthor(String nameAuthor) {
+        this.nameAuthor = nameAuthor;
     }
 
     public String getImageAlbum() {

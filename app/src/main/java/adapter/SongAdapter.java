@@ -42,8 +42,8 @@ public class SongAdapter extends RecyclerView.Adapter <SongAdapter.viewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder viewHolder, final int position) {
-        viewHolder.tvSongName.setText(songArrayList.get(position).getTitle());
-        viewHolder.tvSongAritstName.setText(songArrayList.get(position).getArtist());
+        viewHolder.tvSongName.setText(songArrayList.get(position).getNameSong());
+        viewHolder.tvSongAritstName.setText(songArrayList.get(position).getNameArtist());
         viewHolder.iconBeats.setImageResource((songArrayList.get(position).getImageSong()));
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

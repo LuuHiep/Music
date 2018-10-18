@@ -1,13 +1,8 @@
 package activity;
 
-import android.content.ComponentName;
 import android.content.ContentResolver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.IBinder;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,7 +17,6 @@ import com.example.lau.music.R;
 import java.util.ArrayList;
 
 import model.Song;
-import service.Service;
 
 public class PlayActivity extends AppCompatActivity {
 
@@ -34,23 +28,15 @@ public class PlayActivity extends AppCompatActivity {
 
     private ArrayList<Song> songList;
     private int position = 0;
-    //service
-    public Service musicSrv;
-    private Intent playIntent;
-    int currentPos;
-    //binding
-    private boolean musicBound = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+
         initView();
         getPosition();
         getDataListSong();
-        setNameSongPlay();
-        setSeekBar();
     }
 
     private void initView(){
@@ -95,65 +81,6 @@ public class PlayActivity extends AppCompatActivity {
                 } while (songCursor.moveToNext());
             }
         }
-    }
-
-    // Connect to the Service
-    private ServiceConnection musicConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            Service.MusicBinder binder = (Service.MusicBinder) service;
-            //get service
-            musicSrv = binder.getService();
-            //pass list
-            musicSrv.setList(songList);
-            songPicked();
-            musicBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            musicBound = false;
-        }
-    };
-
-    //start and bind the service when the activity starts
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (playIntent == null) {
-            playIntent = new Intent(this, Service.class);
-            bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
-            startService(playIntent);
-        }
-    }
-
-    private void setNameSongPlay() {
-        tvTitleTbPlay.setText(songList.get(position).getTitle());
-    }
-
-    private void songPicked(){
-        musicSrv.setSong(position);
-        musicSrv.playSong();
-    }
-
-    private void setSeekBar(){
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                musicSrv.seekTo(seekBar.getProgress());
-            }
-        });
     }
 
     private void initClick(){

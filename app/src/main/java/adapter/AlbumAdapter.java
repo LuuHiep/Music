@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.lau.music.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Album;
 
@@ -39,8 +40,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.viewHolder> 
     @Override
     public void onBindViewHolder(@NonNull viewHolder viewHolder, int position) {
 
-        viewHolder.tvNameAlbum.setText(albumArrayList.get(position).getTitle());
-        viewHolder.tvAlbumAritstName.setText(albumArrayList.get(position).getImageAlbum());
+        viewHolder.tvNameAlbum.setText(albumArrayList.get(position).getNameAlbums());
+        viewHolder.tvAlbumAritstName.setText(albumArrayList.get(position).getNameAuthor());
         Bitmap bitmap = BitmapFactory.decodeFile(albumArrayList.get(position).getImageAlbum());
         if (bitmap != null) {
             viewHolder.imageAlbum.setImageBitmap(bitmap);
@@ -65,5 +66,11 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.viewHolder> 
             tvNameAlbum = (TextView) itemView.findViewById(R.id.tv_album_name);
             tvAlbumAritstName = (TextView) itemView.findViewById(R.id.tv_album_artist_name);
         }
+    }
+
+    public void setfilter(List<Album> listAlbums) {
+        listAlbums = new ArrayList<>();
+        listAlbums.addAll(listAlbums);
+        notifyDataSetChanged();
     }
 }

@@ -19,7 +19,6 @@ import java.util.List;
 import model.Album;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.viewHolder> {
-    public static final String ALBUM_KEY = "album_key";
 
     private ArrayList<Album> albumArrayList;
     private Context contextAlbum;
@@ -66,11 +65,5 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.viewHolder> 
             tvNameAlbum = (TextView) itemView.findViewById(R.id.tv_album_name);
             tvAlbumAritstName = (TextView) itemView.findViewById(R.id.tv_album_artist_name);
         }
-    }
-
-    public void setfilter(List<Album> listAlbums) {
-        listAlbums = new ArrayList<>();
-        listAlbums.addAll(listAlbums);
-        notifyDataSetChanged();
     }
 }

@@ -18,12 +18,7 @@ import java.util.ArrayList;
 import activity.PlayActivity;
 import model.Song;
 
-public class SongAdapter extends RecyclerView.Adapter <SongAdapter.viewHolder> {
-
-    public static final String SONG_PATH = "song_path";
-    public static final String LIST_SONG = "list_song";
-    public static final String SONG_POS = "position";
-
+public class SongAdapter extends RecyclerView.Adapter<SongAdapter.viewHolder> {
     private ArrayList<Song> songArrayList;
     private Context contextSong;
 
@@ -36,7 +31,7 @@ public class SongAdapter extends RecyclerView.Adapter <SongAdapter.viewHolder> {
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = layoutInflater.inflate(R.layout.item_song, viewGroup,false);
+        View itemView = layoutInflater.inflate(R.layout.item_song, viewGroup, false);
         return new viewHolder(itemView);
     }
 
@@ -44,7 +39,7 @@ public class SongAdapter extends RecyclerView.Adapter <SongAdapter.viewHolder> {
     public void onBindViewHolder(@NonNull viewHolder viewHolder, final int position) {
         viewHolder.tvSongName.setText(songArrayList.get(position).getNameSong());
         viewHolder.tvSongAritstName.setText(songArrayList.get(position).getNameArtist());
-        viewHolder.iconBeats.setImageResource((songArrayList.get(position).getImageSong()));
+        viewHolder.iconBeats.setImageResource(R.drawable.icon_beats);
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,10 +57,11 @@ public class SongAdapter extends RecyclerView.Adapter <SongAdapter.viewHolder> {
         return songArrayList.size();
     }
 
-    public class viewHolder extends RecyclerView.ViewHolder{
+    public class viewHolder extends RecyclerView.ViewHolder {
 
         private ImageView iconBeats;
         private TextView tvSongName, tvSongAritstName;
+
         public viewHolder(@NonNull final View itemView) {
             super(itemView);
 

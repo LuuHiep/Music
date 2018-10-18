@@ -55,8 +55,6 @@ public class FragmentAlbum extends Fragment {
     }
 
     private void getData() {
-
-
         ContentResolver cr = getActivity().getContentResolver();
         Uri musicUri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI;
         Cursor musicCursor = cr.query(musicUri, null, null, null, null);
@@ -82,21 +80,6 @@ public class FragmentAlbum extends Fragment {
             while (musicCursor.moveToNext());
         }
         albumAdapter.notifyDataSetChanged();
-
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.item_grid:
-                rvAlbum.setLayoutManager(new GridLayoutManager(getActivity(), numberofColumns));
-                break;
-            case R.id.rv_album:
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                rvAlbum.setLayoutManager(layoutManager);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

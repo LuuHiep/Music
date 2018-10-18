@@ -27,7 +27,9 @@ import com.example.lau.music.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import adapter.AlbumAdapter;
 import adapter.ArtistAdapter;
+import model.Album;
 import model.Artist;
 
 import static android.support.v7.widget.LinearLayoutManager.VERTICAL;
@@ -47,10 +49,11 @@ public class FragmentArtist extends Fragment {
         artistAdapter = new ArtistAdapter((ArrayList<Artist>) listArtist, getActivity());
         setHasOptionsMenu(true);
         getData();
+        listArtist = new ArrayList<>();
+        artistAdapter = new ArtistAdapter((ArrayList<Artist>) listArtist, getActivity());
+        getData();
         rvArtist.setAdapter(artistAdapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvArtist.setLayoutManager(layoutManager);
+        rvArtist.setLayoutManager(new GridLayoutManager(getActivity(), numberofColumns));
         return view;
     }
 
@@ -84,23 +87,4 @@ public class FragmentArtist extends Fragment {
 
     }
 
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.item_search:
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                rvArtist.setLayoutManager(layoutManager);
-                Log.d("menu artist", "onOptionsItemSelected: ");
-                break;
-            case R.id.item_grid:
-                rvArtist.setLayoutManager(new GridLayoutManager(getActivity(), numberofColumns));
-                Log.d("menu artist", "onOptionsItemSelected: ");
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-
-    }
 }

@@ -49,8 +49,8 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.viewHolder
 
     public class viewHolder extends RecyclerView.ViewHolder {
 
-        ImageView ivArtistImage;
-        TextView tvArtistName, tvAlbumNumber, tvSongNumber;
+        private ImageView ivArtistImage;
+        private TextView tvArtistName, tvAlbumNumber, tvSongNumber;
 
         public viewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -62,10 +62,4 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.viewHolder
         }
     }
 
-
-    public void setfilter(List<Artist> listArtist) {
-        listArtist = new ArrayList<>();
-        listArtist.addAll(listArtist);
-        notifyDataSetChanged();
-    }
 }

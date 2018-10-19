@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Handler;
 import android.os.IBinder;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -22,10 +24,13 @@ import android.widget.TextView;
 import com.example.lau.music.R;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import adapter.SongAdapter;
 import adapter.SongPlayAdapter;
 import model.Song;
+import service.Common;
 import service.MusicController;
 import service.MusicService;
 
@@ -38,7 +43,9 @@ public class PlayActivity extends AppCompatActivity {
     private RecyclerView rvListSongPlaying;
     private View view;
 
+    private boolean isSeeking;
     private int position = 0;
+    private int totalTime;
     private ArrayList<Song> songList;
     private ArrayList<Song> listSongPlay;
     private SongPlayAdapter songPlayAdapter;
@@ -51,6 +58,7 @@ public class PlayActivity extends AppCompatActivity {
     private boolean musicBound = false;
     //controller
     private MusicController controller;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +69,7 @@ public class PlayActivity extends AppCompatActivity {
         getPositionSong();
         setNameSongPlay();
         initClick();
+        setSeekBar();
     }
 
     private void initView(){
@@ -203,6 +212,51 @@ public class PlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 musicSrv.playNext();
+            }
+        });
+    }
+
+    private void setSeekBar(){
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                tvPlayedMusicTime.setText(Common.miliSecondToString(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                isSeeking = true;
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                musicSrv.seekTo(seekBar.getProgress());
+                if (!musicSrv.isPlaying()) {
+                    musicSrv.resumeMusic();
+                    ivPlayPause.setImageResource(R.drawable.pause);
+                }
+                isSeeking = false;
+                updateSeekBar();
+            }
+        });
+
+    }
+
+    private void updateSeekBar() {
+        seekBar.setMax(totalTime);
+        int currentLength = musicSrv.getCurrentLength();
+
+        if (!isSeeking) {
+            seekBar.setProgress(currentLength);
+            tvPlayedMusicTime.setText(Common.miliSecondToString(currentLength));
+        }
+        tvFullTime.setText(Common.miliSecondToString(totalTime));
+        Handler musicHandler = new Handler();
+        musicHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                updateSeekBar();
             }
         });
     }

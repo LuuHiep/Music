@@ -84,7 +84,6 @@ public class FragmentArtist extends Fragment {
             while (musicCursor.moveToNext());
         }
         artistAdapter.notifyDataSetChanged();
-
     }
 
 }

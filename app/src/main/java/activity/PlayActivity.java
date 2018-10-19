@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,6 +23,8 @@ import com.example.lau.music.R;
 
 import java.util.ArrayList;
 
+import adapter.SongAdapter;
+import adapter.SongPlayAdapter;
 import model.Song;
 import service.MusicController;
 import service.MusicService;
@@ -33,13 +36,18 @@ public class PlayActivity extends AppCompatActivity {
     private SeekBar seekBar;
     private ImageView ivPrevious, ivRepeat, ivPlayPause, ivShuffle, ivNext;
     private RecyclerView rvListSongPlaying;
+    private View view;
 
     private int position = 0;
     private ArrayList<Song> songList;
+    private ArrayList<Song> listSongPlay;
+    private SongPlayAdapter songPlayAdapter;
+
     //service
     public MusicService musicSrv;
     private Intent playIntent;
-    private int currentPos;
+    int currentPos;
+    //binding
     private boolean musicBound = false;
     //controller
     private MusicController controller;
@@ -49,10 +57,10 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         initView();
-        getDataListSong();
+        getListSong();
         getPositionSong();
         setNameSongPlay();
-
+        initClick();
     }
 
     private void initView(){
@@ -77,10 +85,10 @@ public class PlayActivity extends AppCompatActivity {
         Log.d("position_1", " " + position);
     }
 
-    private void getDataListSong (){
+    private void getListSong(){
         ContentResolver contentResolver = getApplicationContext().getContentResolver();
         Uri songUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor songCursor = contentResolver.query(songUri, null, null,null,null );
+        Cursor songCursor = contentResolver.query(songUri, null, null, null, null);
         {
             if (songCursor != null && songCursor.moveToFirst()) {
                 int songId = songCursor.getColumnIndex(MediaStore.Audio.Media._ID);
@@ -140,10 +148,71 @@ public class PlayActivity extends AppCompatActivity {
         musicSrv.playSong();
     }
 
+    private void initClick(){
+
+        ivPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                musicSrv.playPrev();
+            }
+        });
+
+        ivRepeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                musicSrv.playRepeat();
+                if (musicSrv != null){
+                    if (musicSrv.isPlaying()){
+                        ivRepeat.setImageResource(R.drawable.repeat_one);
+                    } else {
+                        ivRepeat.setImageResource(R.drawable.repeat);
+                    }
+                }
+            }
+        });
+
+        ivPlayPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                musicSrv.playPauseMusic();
+                if (musicSrv != null) {
+                    if (musicSrv.isPlaying()) {
+                        ivPlayPause.setImageResource(R.drawable.pause);
+                    } else {
+                        ivPlayPause.setImageResource(R.drawable.play);
+                    }
+                }
+            }
+        });
+
+        ivShuffle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                musicSrv.playShufle();
+                if (musicSrv != null){
+                    if (musicSrv.isPlaying()){
+                        ivShuffle.setImageResource(R.drawable.shuffle_one);
+                    } else {
+                        ivShuffle.setImageResource(R.drawable.shuffle);
+                    }
+                }
+            }
+        });
+
+        ivNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                musicSrv.playNext();
+            }
+        });
+    }
+
+
     @Override
     protected void onDestroy() {
         stopService(playIntent);
         super.onDestroy();
         unbindService(musicConnection);
     }
+
 }

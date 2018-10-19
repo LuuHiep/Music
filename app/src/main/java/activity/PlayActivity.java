@@ -8,12 +8,11 @@ import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,23 +20,21 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import com.example.lau.music.R;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import adapter.SongAdapter;
 import adapter.SongPlayAdapter;
 import model.Song;
 import service.Common;
 import service.MusicController;
 import service.MusicService;
 
-public class PlayActivity extends AppCompatActivity {
+public class PlayActivity extends AppCompatActivity{
 
     private Toolbar toolbarPlay;
-    private TextView tvPlayedMusicTime, tvFullTime, tvTitleTbPlay;
+    private TextView tvPlayedMusicTime, tvFullTime,tvTitleTbPlay;
     private SeekBar seekBar;
     private ImageView ivPrevious, ivRepeat, ivPlayPause, ivShuffle, ivNext;
     private RecyclerView rvListSongPlaying;
@@ -67,12 +64,15 @@ public class PlayActivity extends AppCompatActivity {
         initView();
         getListSong();
         getPositionSong();
-        setNameSongPlay();
+        //setNameSongPlay();
+        setActionbar();
         initClick();
         setSeekBar();
+//        updateRepeat();
+        upDateNameSongPlay();
     }
 
-    private void initView(){
+    private void initView() {
         toolbarPlay = (Toolbar) findViewById(R.id.toolbar_play);
         tvPlayedMusicTime = (TextView) findViewById(R.id.tv_played_music_time);
         tvFullTime = (TextView) findViewById(R.id.tv_full_time);
@@ -88,13 +88,20 @@ public class PlayActivity extends AppCompatActivity {
         songList = new ArrayList<>();
     }
 
+    private void setActionbar() {
+        toolbarPlay = (Toolbar) findViewById(R.id.toolbar_play);
+        setSupportActionBar(toolbarPlay);
+        setTitle(songList.get(position).getNameSong());
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
     // nhận position
     private void getPositionSong() {
         position = getIntent().getIntExtra("position", 1);
         Log.d("position_1", " " + position);
     }
 
-    private void getListSong(){
+    private void getListSong() {
         ContentResolver contentResolver = getApplicationContext().getContentResolver();
         Uri songUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         Cursor songCursor = contentResolver.query(songUri, null, null, null, null);
@@ -109,7 +116,7 @@ public class PlayActivity extends AppCompatActivity {
                     String currentTitle = songCursor.getString(songTitle);
                     String currentArtist = songCursor.getString(songArtist);
                     String data = songCursor.getString(songData);
-                    songList.add(new Song(currenId,currentTitle, currentArtist,R.drawable.icon_beats));
+                    songList.add(new Song(currenId, currentTitle, currentArtist, R.drawable.icon_beats));
                     Log.d("data", data);
                 } while (songCursor.moveToNext());
             }
@@ -117,6 +124,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void setNameSongPlay() {
+        setTitle(songList.get(position).getNameSong());
         tvTitleTbPlay.setText(songList.get(position).getNameSong());
     }
 
@@ -148,6 +156,7 @@ public class PlayActivity extends AppCompatActivity {
             playIntent = new Intent(this, MusicService.class);
             bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
             startService(playIntent);
+            setNameSongPlay();
         }
     }
 
@@ -155,28 +164,30 @@ public class PlayActivity extends AppCompatActivity {
         musicSrv.setSong(position);
         Log.d("ngaydeptroi", "" + position);
         musicSrv.playSong();
+        updateSeekBar();
     }
 
-    private void initClick(){
+    private void initClick() {
 
         ivPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 musicSrv.playPrev();
+                setPlayingMusic();
             }
         });
 
         ivRepeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                musicSrv.playRepeat();
-                if (musicSrv != null){
-                    if (musicSrv.isPlaying()){
-                        ivRepeat.setImageResource(R.drawable.repeat_one);
-                    } else {
-                        ivRepeat.setImageResource(R.drawable.repeat);
-                    }
+                if (musicSrv.isRepeat()) {
+                    ivRepeat.setImageResource(R.drawable.repeat);
+                    musicSrv.setRepeat(false);
+                } else {
+                    ivRepeat.setImageResource(R.drawable.repeat_one);
+                    musicSrv.setRepeat(true);
                 }
+                setNameSongPlay();
             }
         });
 
@@ -184,6 +195,7 @@ public class PlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 musicSrv.playPauseMusic();
+                setPlayingMusic();
                 if (musicSrv != null) {
                     if (musicSrv.isPlaying()) {
                         ivPlayPause.setImageResource(R.drawable.pause);
@@ -197,13 +209,13 @@ public class PlayActivity extends AppCompatActivity {
         ivShuffle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                musicSrv.playShufle();
-                if (musicSrv != null){
-                    if (musicSrv.isPlaying()){
-                        ivShuffle.setImageResource(R.drawable.shuffle_one);
-                    } else {
-                        ivShuffle.setImageResource(R.drawable.shuffle);
-                    }
+                setPlayingMusic();
+                if (musicSrv.isShuffle()) {
+                    ivShuffle.setImageResource(R.drawable.shuffle);
+                    musicSrv.setShuffle(false);
+                } else {
+                    ivShuffle.setImageResource(R.drawable.shuffle_one);
+                    musicSrv.setShuffle(true);
                 }
             }
         });
@@ -212,11 +224,13 @@ public class PlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 musicSrv.playNext();
+                setPlayingMusic();
             }
         });
     }
 
-    private void setSeekBar(){
+    // Set SeekBar
+    private void setSeekBar() {
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -244,14 +258,17 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void updateSeekBar() {
+        totalTime = musicSrv.getTotalTime();
         seekBar.setMax(totalTime);
         int currentLength = musicSrv.getCurrentLength();
-
+        Log.d("currentlength", "" + currentLength);
         if (!isSeeking) {
             seekBar.setProgress(currentLength);
+
             tvPlayedMusicTime.setText(Common.miliSecondToString(currentLength));
         }
         tvFullTime.setText(Common.miliSecondToString(totalTime));
+        Log.d("fulltime", "" + totalTime);
         Handler musicHandler = new Handler();
         musicHandler.post(new Runnable() {
             @Override
@@ -261,6 +278,19 @@ public class PlayActivity extends AppCompatActivity {
         });
     }
 
+    // chưa có tác dụng
+    private void setPlayingMusic() {
+        for (int i = 0; i < songList.size(); i++) {
+            if (musicSrv.getIdSong() == songList.get(i).getId()) {
+                // Log.d("idsong ", " " + musicService.getId() + " " + i);
+                tvTitleTbPlay.setText(songList.get(position).getNameSong());
+            }
+        }
+    }
+
+    private void upDateNameSongPlay(){
+        tvTitleTbPlay.setText(songList.get(position).getNameSong());
+    }
 
     @Override
     protected void onDestroy() {

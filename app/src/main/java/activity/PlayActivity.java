@@ -256,28 +256,27 @@ public class PlayActivity extends AppCompatActivity{
                 updateSeekBar();
             }
         });
-
     }
 
     private void updateSeekBar() {
-        totalTime = musicSrv.getTotalTime();
-        seekBar.setMax(totalTime);
-        int currentLength = musicSrv.getCurrentLength();
-        Log.d("currentlength", "" + currentLength);
-        if (!isSeeking) {
-            seekBar.setProgress(currentLength);
 
-            tvPlayedMusicTime.setText(Common.miliSecondToString(currentLength));
-        }
-        tvFullTime.setText(Common.miliSecondToString(totalTime));
-        Log.d("fulltime", "" + totalTime);
-        Handler musicHandler = new Handler();
-        musicHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                updateSeekBar();
-            }
-        });
+                totalTime = musicSrv.getTotalTime();
+                seekBar.setMax(totalTime);
+                int currentLength = musicSrv.getCurrentLength();
+                Log.d("currentlength", "" + currentLength);
+                if (!isSeeking) {
+                    seekBar.setProgress(currentLength);
+                    tvPlayedMusicTime.setText(Common.miliSecondToString(currentLength));
+                }
+                tvFullTime.setText(Common.miliSecondToString(totalTime));
+                Log.d("fulltime", "" + totalTime);
+                Handler musicHandler = new Handler();
+                musicHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateSeekBar();
+                    }
+                });
     }
 
     // chưa có tác dụng
@@ -313,7 +312,5 @@ public class PlayActivity extends AppCompatActivity{
         super.onDestroy();
         unbindService(musicConnection);
     }
-
-
 
 }

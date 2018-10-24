@@ -27,9 +27,9 @@ import java.util.ArrayList;
 
 import adapter.SongPlayAdapter;
 import model.Song;
-import service.Common;
-import service.MusicController;
-import service.MusicService;
+import services.Common;
+import services.MusicController;
+import services.MusicService;
 
 public class PlayActivity extends AppCompatActivity{
 

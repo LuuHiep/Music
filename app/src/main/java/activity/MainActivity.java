@@ -22,7 +22,7 @@ import com.example.lau.music.R;
 import java.util.ArrayList;
 
 import model.Song;
-import service.MusicService;
+import services.MusicService;
 
 public class MainActivity extends AppCompatActivity {
     private String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};

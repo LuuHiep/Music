@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_album_artist_notification"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_artist" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tv_song_title_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Nếu không có anh ta"
+            android:maxLines="1" />
+
+        <TextView
+            android:id="@+id/tv_artist_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="Khánh Phương"
+            android:maxLines="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="5dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:padding="5dp"
+            android:background="#CCC"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/ib_previous_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:src="@drawable/previous"
+                android:padding="5dp"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:id="@+id/ib_play_pause_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:src="@drawable/play"
+                android:padding="5dp"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:id="@+id/ib_next_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:src="@drawable/next"
+                android:padding="5dp"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:id="@+id/ib_close_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:padding="5dp"
+                android:src="@android:drawable/ic_menu_close_clear_cancel" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

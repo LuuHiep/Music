@@ -57,6 +57,8 @@ public class PlayActivity extends AppCompatActivity{
     private MusicController controller;
     private MediaPlayer mediaPlayer;
 
+    public static final String IS_PlAYING = "is_playing";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +71,7 @@ public class PlayActivity extends AppCompatActivity{
         initClick();
         setSeekBar();
 //        updateRepeat();
-        upDateNameSongPlay();
+        updateTitleSong();
     }
 
     private void initView() {
@@ -289,7 +291,20 @@ public class PlayActivity extends AppCompatActivity{
     }
 
     private void upDateNameSongPlay(){
+        position = musicSrv.getSongPosn();
         tvTitleTbPlay.setText(songList.get(position).getNameSong());
+    }
+
+    // update Title song play
+    private void updateTitleSong() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                upDateNameSongPlay();
+                handler.postDelayed(this, 500);
+            }
+        }, 100);
     }
 
     @Override
@@ -298,5 +313,7 @@ public class PlayActivity extends AppCompatActivity{
         super.onDestroy();
         unbindService(musicConnection);
     }
+
+
 
 }
